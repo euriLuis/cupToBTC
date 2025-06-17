@@ -5,11 +5,11 @@ const rl = readline.createInterface({
 });
 
 //valores de cambio.
-//const cambioUSDaBTC = obtenerPrecioBTC();
+const cambioUSDaBTC = obtenerPrecioBTC();
 const cambioCUPaUSD = 375;
 
 console.log(`
-            ***Bienvenido a su converidor automatico***
+            ***Bienvenido a su convertidor automatico***
             `)
 console.log(
     `    ██████╗██╗   ██╗██████╗      █████╗     ██████╗ ████████╗ ██████╗              
@@ -36,37 +36,34 @@ async function obtenerPrecioBTC() {
   }
 }
 
-obtenerPrecioBTC();
-
-
 //obtener la cantidad que desea calcular el usuario 
-function preguntaConValidacion(texto, validador) {
+function pedirNumero() {
   return new Promise((resolve) => {
-    function preguntar() {
-      rl.question(texto, (respuesta) => {
-        console.log(typeof respuesta);
-        if (validador(respuesta)) {
-          resolve(respuesta);
-        } else {
-          console.log('Entrada inválida, intenta de nuevo.');
-          preguntar();
-        }
-      });
-    }
-    preguntar();
+    rl.question("Introduce la cantidad en CUP:", (respuesta) => {
+      const numero = Number(respuesta);
+      if (!isNaN(numero) && numero >= 0) {
+        resolve(numero);
+      } else {
+        console.log("El número no es válido");
+        console.log(`Debe ser un número positivo y que no contenga
+ningún otro tipo de caracter`);
+        resolve(pedirNumero());
+      }
+    });
   });
 }
 
-async function main() {
-    
-  const edad = await preguntaConValidacion(
-    
-    'Ingresa tu edad (número): ',
-    (input) => !isNaN(input) && input > 0
-  );
-  console.log(`Tu edad es: ${edad}`);
-  rl.close();
-}
+(async () => {
+  let cantidadDeCup = await pedirNumero();
+  let totalDeBTCporCUP = await cantidadDeCup / cambioCUPaUSD /await cambioUSDaBTC;
 
-main();
+  
+  if(await totalDeBTCporCUP <= 0.0009){
+    let cantEnSat = await totalDeBTCporCUP * 100000000;
+    console.log(await cantidadDeCup + " CUP equivale al cambio actual a " + await cantEnSat.toFixed() + " Satochis");
+  }else{
+    console.log(await cantidadDeCup + " CUP equivale al cambio actual a " + await totalDeBTCporCUP.toFixed(3) + " BTC")
+  }
+  rl.close();
+})();
 
