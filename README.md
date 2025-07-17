@@ -25,12 +25,14 @@ Este es un pequeño programa en Node.js que permite convertir **pesos cubanos (C
 ## ⚙️ Instalación y ejecución
 
 1. Clona este repositorio:
+
    ```bash
    git clone https://github.com/euriLuis/cupToBTC.git
    cd cupToBTC
    ```
 
 2. Ejecuta el programa:
+
    ```bash
    node cupToBTC.js
    ```
@@ -54,6 +56,7 @@ Introduce la cantidad en CUP: 1500
 ## 🔧 Notas técnicas
 
 - El valor de 1 USD se fija en **375 CUP**. Puedes modificar esta tasa cambiaria directamente en el archivo `cupToBTC.js`:
+
   ```js
   const cambioCUPaUSD = 375;
   ```
